@@ -19,4 +19,5 @@ if 'dev.ffmpegkit-maintained:llama-android' not in s:
  s=s.replace('dependencies {','dependencies {\n    implementation "dev.ffmpegkit-maintained:llama-android:0.1.1"\n',1)
 p.write_text(s)
 PY
+sed -i 's/minSdkVersion = 23/minSdkVersion = 24/g' android/variables.gradle
 npm run android:sync
