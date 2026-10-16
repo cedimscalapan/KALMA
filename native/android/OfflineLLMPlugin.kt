@@ -59,8 +59,8 @@ class OfflineLLMPlugin : Plugin() {
   val limit=(call.getInt("maxTokens")?:144).coerceIn(16,256)
   bg.launch{
    try{
-    val loaded=Llama.loadModel(modelFile.absolutePath,LlamaConfig(contextSize=1024,threads=4))
-    val answer=Llama.complete(loaded,prompt=prompt,systemPrompt=system,maxTokens=limit)
+    val loaded=Llama.loadModel(modelPath=modelFile.absolutePath,config=LlamaConfig(contextSize=1024,threads=4))
+    val answer=try { Llama.complete(loaded,prompt=prompt,systemPrompt=system,maxTokens=limit) } finally { Llama.releaseModel(loaded) }
     withContext(Dispatchers.Main){call.resolve(JSObject().put("text",answer.text))}
    }catch(e:Exception){withContext(Dispatchers.Main){call.reject(e.message?:"Inference failed")}}
   }
