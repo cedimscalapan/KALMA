@@ -17,10 +17,17 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-      - uses: android-actions/setup-android@v3
-      - run: npm install
-      - run: bash scripts/setup-android.sh
-      - run: cd android && chmod +x gradlew && ./gradlew assembleDebug
+      - name: Use preinstalled Android SDK
+        run: |
+          echo "ANDROID_HOME=${ANDROID_HOME:-/usr/local/lib/android/sdk}" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=${ANDROID_HOME:-/usr/local/lib/android/sdk}" >> "$GITHUB_ENV"
+          sdkmanager --version
+      - name: Install npm packages
+        run: npm install
+      - name: Prepare Capacitor Android
+        run: bash scripts/setup-android.sh
+      - name: Compile APK
+        run: cd android && chmod +x gradlew && ./gradlew assembleDebug --stacktrace
       - uses: actions/upload-artifact@v4
         if: success()
         with:
