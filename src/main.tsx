@@ -14,7 +14,13 @@ const store=<T,>(key:string,fallback:T):T=>{try{return JSON.parse(localStorage.g
 const prompts=['I need someone to listen','Help me unwind','I want to reflect','I feel overwhelmed'];
 const urgent=/suicid|kill myself|end my life|hurt myself|self.harm|magpakamatay|saktan ang sarili/i;
 const system='You are Kalma, a friendly offline emotional-wellbeing companion. Never claim to be a psychologist, therapist or clinician. Stay empathetic, brief and grounded. Avoid diagnosis, medication advice or confident unsupported claims. Suggest simple coping skills and connecting with trusted people. If user seems unsafe, encourage seeking immediate human help. Never imply exclusive personal attachment or secrecy.';
-const cleanReply=(s:string)=>{let t=(s||'').replace(/<\\|[^>]+\\|>/g,'').trim();t=t.replace(/^(assistant|kalma|response):\\s*/i,'');t=t.split(/\\n\\s*(?:user|human|assistant|system|kalma)\\s*:/i)[0].trim();if(!t||/user:|assistant:|model is not working/i.test(t))return "I'm here to listen. What would you like to share?";return t.slice(0,450)};
+const cleanReply=(s:string)=>{
+ let t=(s||'').replace(/<\|[^>]+\|>/g,'').trim();
+ t=t.replace(/^(assistant|kalma|response)\s*:\s*/i,'');
+ t=t.split(/\n\s*(?:user|human|assistant|system|kalma|person)\s*:/i)[0].trim();
+ if(!t||/(?:user|assistant|person)\s*:|model is not working/i.test(t))return "I'm here to listen. What would you like to share?";
+ return t.slice(0,450);
+};
 const icons:Record<Tab,string>={Today:'✿',Companion:'◉',Journal:'▤',Explore:'◇',Settings:'⚙'};
 const moods=[{label:'Great',icon:'✦'},{label:'Good',icon:'☀'},{label:'Okay',icon:'◡'},{label:'Low',icon:'☂'},{label:'Anxious',icon:'〰'}];
 function App(){
