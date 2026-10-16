@@ -13,7 +13,7 @@ test('reject echoed instruction and onboarding text',()=>{
  assert.equal(cleanModelReply("I'm ready to listen once a model is connected. Open Settings and choose the GGUF file.",'hello'),null);
 });
 test('remove fake dialogue continuation instead of showing a transcript',()=>{
- assert.equal(cleanModelReply("That sounds stressful. What happened?\\nuser: Not much\\nassistant: Oh okay",'stressed'),"That sounds stressful. What happened?");
+ assert.equal(cleanModelReply("That sounds stressful. What happened?\nuser: Not much\nassistant: Oh okay",'stressed'),"That sounds stressful. What happened?");
 });
 test('respond conversationally to stress, greetings, and school context',()=>{
  assert.match(cannedFirstResponse("I'm stressed",[])||'',/pressure on you/i);
