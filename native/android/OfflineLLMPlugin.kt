@@ -9,7 +9,7 @@ import com.getcapacitor.Plugin
 import com.getcapacitor.PluginCall
 import com.getcapacitor.annotation.ActivityCallback
 import com.getcapacitor.annotation.CapacitorPlugin
-import com.getcapacitor.PluginMethod
+import com.getcapacitor.annotation.PluginMethod
 import dev.ffmpegkit.llama.Llama
 import dev.ffmpegkit.llama.LlamaConfig
 import kotlinx.coroutines.CoroutineScope
