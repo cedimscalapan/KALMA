@@ -19,6 +19,8 @@ jobs:
           java-version: '21'
       - name: Install npm packages
         run: npm install
+      - name: Test offline conversation handling
+        run: npm test
       - name: Prepare Capacitor Android
         run: bash scripts/setup-android.sh
       - name: Compile APK
