@@ -32,7 +32,7 @@ def record(user,assistant,src):
                                           {"role":"assistant","content":a}]}
     return None
 examples=[]
-daily=load_dataset("HuggingFaceTB/everyday-conversations-llama3.1-2k",split="train")
+daily=load_dataset("HuggingFaceTB/everyday-conversations-llama3.1-2k",split="train_sft")
 for sample in daily:
     msgs=sample.get("messages") or []
     if isinstance(msgs,str):
