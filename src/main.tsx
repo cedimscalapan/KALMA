@@ -5,7 +5,8 @@ import '@ionic/react/css/core.css';
 import {Capacitor} from '@capacitor/core';
 import {OfflineLLM,ModelInfo} from './native';
 import './style.css';
-import {buildModelRequest,cleanModelReply,guidedResponse,fallbackReply} from './conversation';
+import {guidedResponse} from './conversation';
+import {buildReliableRequest,acceptModelReply,recoverConversation} from './chatReliability';
 import {routeMessage} from './router';
 setupIonicReact();
 type Tab='Today'|'Companion'|'Journal'|'Explore'|'Settings';
@@ -36,27 +37,47 @@ function App(){
  const greeting=useMemo(()=>{const h=new Date().getHours();return h<12?'Good morning':h<18?'Good afternoon':'Good evening'},[]);
  function chooseMood(m:typeof moods[number]){setMoodHistory(h=>[{...m,date:new Date().toISOString()},...h])}
  async function chooseModel(){setError('');if(!Capacitor.isNativePlatform()){setError('Model importing works in the installed Android app, not the web preview.');return}try{setModel(await OfflineLLM.importModel())}catch(e){setError(String(e))}}
- async function send(text=message){const value=text.trim();if(!value||loading)return;setMessage('');const next:Message={role:'user',text:value,time:new Date().toISOString()};setMessages(a=>[...a,next]);
- if(routeMessage(value)==='safety'){setMessages(a=>[...a,{role:'assistant',text:'Thank you for telling me. I cannot provide emergency care. Please contact someone you trust who can stay with you, or reach local emergency services right now if you are in immediate danger.',time:new Date().toISOString(),source:'safety'}]);return}
- if(!model){setMessages(a=>[...a,{role:'assistant',text:'I’m ready to listen once a model is connected. Open Settings and choose the GGUF file you downloaded.',time:new Date().toISOString()}]);return}
- // Only an explicit request for a guided exercise bypasses generation.
- // Ordinary supportive chat always reaches the imported GGUF model.
- const wantsExercise=routeMessage(value)==='guided';
- if(wantsExercise){
-   const guided=guidedResponse(value,messages);
-   if(guided){setMessages(items=>[...items,{role:'assistant',text:guided,time:new Date().toISOString(),source:'guided'}]);return;}
+ async function send(text=message){
+ const value=text.trim();
+ if(!value||loading)return;
+ setMessage('');
+ const next:Message={role:'user',text:value,time:new Date().toISOString()};
+ setMessages(items=>[...items,next]);
+ if(routeMessage(value)==='safety'){
+   setMessages(items=>[...items,{role:'assistant',source:'safety',time:new Date().toISOString(),
+    text:'Thank you for sharing this. Please tell a trusted person who can stay with you, and contact local emergency services if you are in immediate danger. This app cannot provide emergency help.'}]);
+   return;
  }
- setLoading(true);setError('');try{
-  // The AAR applies the GGUF chat template. A fake transcript here makes the tiny model echo roles.
-  const request=buildModelRequest(value,messages);
-  const out=await OfflineLLM.generate(request);
-  const generated=cleanModelReply(out.text,value,messages);
-  const reply=generated??fallbackReply(value,messages);
-  setMessages(a=>[...a,{role:'assistant',text:reply,time:new Date().toISOString(),source:generated?'model':'fallback'}]);
+ // A guided wellness exercise is available offline even if the model is not connected.
+ if(routeMessage(value)==='guided'){
+   const guidance=guidedResponse(value,messages);
+   if(guidance){setMessages(items=>[...items,{role:'assistant',text:guidance,time:new Date().toISOString(),source:'guided'}]);return;}
+ }
+ setLoading(true);setError('');
+ try{
+   // The Android model may finish initializing after the chat screen is mounted.
+   let currentModel=model;
+   if(!currentModel&&Capacitor.isNativePlatform()){
+     const info=await OfflineLLM.getModel();
+     currentModel=info.model;
+     if(currentModel)setModel(currentModel);
+   }
+   if(!currentModel){
+     setMessages(items=>[...items,{role:'assistant',source:'fallback',time:new Date().toISOString(),
+      text:'No local model is selected yet. Open Settings and choose a downloaded GGUF model to start chatting.'}]);
+     return;
+   }
+   const result=await OfflineLLM.generate(buildReliableRequest(value,messages));
+   const generated=acceptModelReply(result.text,value,messages);
+   // Reject confused or fabricated output from small local models and recover using known context.
+   setMessages(items=>[...items,{role:'assistant',text:generated??recoverConversation(value,messages),
+    time:new Date().toISOString(),source:generated?'model':'fallback'}]);
  }catch(e){
-  setError('On-device generation failed: '+String(e));
-  setMessages(a=>[...a,{role:'assistant',text:fallbackReply(value,messages),time:new Date().toISOString(),source:'fallback'}]);
- }finally{setLoading(false)}}
+   setError('Local model could not generate: '+String(e));
+   setMessages(items=>[...items,{role:'assistant',text:recoverConversation(value,messages),
+    time:new Date().toISOString(),source:'fallback'}]);
+ }finally{setLoading(false)}
+ }
  const date=new Intl.DateTimeFormat('en',{month:'long',day:'numeric',weekday:'long'}).format(new Date());
  return <IonApp><div className="shell">
  <header className="topbar"><div className="identity"><div className="mark">✳</div><div><div className="brand">kalma<span>.</span></div><div className="brand-sub">A little space for you</div></div></div><button className="model-status" onClick={()=>setTab('Settings')}><span className={'status-dot '+(model?'connected':'')}/>{model?'Model imported':'Set up AI'} <span>›</span></button></header>
