@@ -5,7 +5,7 @@ import '@ionic/react/css/core.css';
 import {Capacitor} from '@capacitor/core';
 import {OfflineLLM,ModelInfo} from './native';
 import './style.css';
-import {buildModelRequest,cleanModelReply,cannedFirstResponse,supportiveReply} from './conversation';
+import {buildModelRequest,cleanModelReply,guidedResponse,fallbackReply} from './conversation';
 setupIonicReact();
 type Tab='Today'|'Companion'|'Journal'|'Explore'|'Settings';
 type Message={role:'user'|'assistant';text:string;time:string};
@@ -39,17 +39,17 @@ function App(){
  async function send(text=message){const value=text.trim();if(!value||loading)return;setMessage('');const next:Message={role:'user',text:value,time:new Date().toISOString()};setMessages(a=>[...a,next]);
  if(urgent.test(value)){setMessages(a=>[...a,{role:'assistant',text:'Thank you for telling me. I cannot provide emergency care. Please contact someone you trust who can stay with you, or reach local emergency services right now if you are in immediate danger.',time:new Date().toISOString()}]);return}
  if(!model){setMessages(a=>[...a,{role:'assistant',text:'I’m ready to listen once a model is connected. Open Settings and choose the GGUF file you downloaded.',time:new Date().toISOString()}]);return}
- const curated=cannedFirstResponse(value,messages);
+ const curated=guidedResponse(value,messages);
  if(curated){setMessages(a=>[...a,{role:'assistant',text:curated,time:new Date().toISOString()}]);return}
  setLoading(true);setError('');try{
   // The AAR applies the GGUF chat template. A fake transcript here makes the tiny model echo roles.
   const request=buildModelRequest(value,messages);
   const out=await OfflineLLM.generate(request);
-  const reply=cleanModelReply(out.text,value) ?? supportiveReply(value,messages);
+  const reply=cleanModelReply(out.text,value,messages) ?? fallbackReply(value,messages);
   setMessages(a=>[...a,{role:'assistant',text:reply,time:new Date().toISOString()}]);
  }catch(e){
   setError('On-device generation failed: '+String(e));
-  setMessages(a=>[...a,{role:'assistant',text:supportiveReply(value,messages),time:new Date().toISOString()}]);
+  setMessages(a=>[...a,{role:'assistant',text:fallbackReply(value,messages),time:new Date().toISOString()}]);
  }finally{setLoading(false)}}
  const date=new Intl.DateTimeFormat('en',{month:'long',day:'numeric',weekday:'long'}).format(new Date());
  return <IonApp><div className="shell">
