@@ -118,8 +118,8 @@ export function guidedResponse(input:string,history:ChatTurn[]):string|null {
   "Of course. You can tell me what's been happening, at your own pace. What's on your mind?",
   "Sige, pwede kang magkwento sa sarili mong pace. Anong nasa isip mo?");
  if(find(value,yes)&&recentSchool)return phrase(ctx,
-  "Okay. What part of your school situation would you like us to sort through first?",
-  "Sige. Aling bahagi ng school situation ang gusto mong unahin?");
+  "Okay. Since school pressure is the topic, would it help to sort through assignments and deadlines or talk about others' expectations?",
+  "Sige. Dahil school pressure ang pinag-uusapan natin, gusto mo bang unahin ang assignments at deadlines o ang expectations ng ibang tao?");
  if(find(value,yes))return phrase(ctx,"Okay, I'm following. What happened next?",'Sige, nakikinig ako. Ano ang sumunod?');
  if(find(value,no))return phrase(ctx,"That's okay. What would be more helpful for us to discuss?",'Okay lang. Ano ang mas makakatulong na pag-usapan natin?');
  if(find(value,vague))return phrase(ctx,"That's alright. We can start small. What was one thing on your mind today?",
