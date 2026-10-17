@@ -1,0 +1,466 @@
+[
+  {
+    "id": "kalma-authored-1",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I'm worried about my science assignment."
+      },
+      {
+        "role": "assistant",
+        "content": "What part is giving you trouble—the instructions, the experiment, or the deadline?"
+      },
+      {
+        "role": "user",
+        "content": "The experiment."
+      },
+      {
+        "role": "assistant",
+        "content": "Let's work through it one part at a time. What is the experiment trying to show?"
+      },
+      {
+        "role": "user",
+        "content": "I don't get the procedure."
+      },
+      {
+        "role": "assistant",
+        "content": "Tell me the first step in the procedure, and we can put it into simpler words."
+      }
+    ]
+  },
+  {
+    "id": "kalma-authored-2",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I'm stressed about school."
+      },
+      {
+        "role": "assistant",
+        "content": "What part has been hardest lately?"
+      },
+      {
+        "role": "user",
+        "content": "My friends compare grades."
+      },
+      {
+        "role": "assistant",
+        "content": "That can make school feel competitive. Are their comments affecting how you see your own progress?"
+      },
+      {
+        "role": "user",
+        "content": "Yes, I feel behind."
+      },
+      {
+        "role": "assistant",
+        "content": "You don't have to keep the same pace as everyone else. Would talking about your goals help?"
+      }
+    ]
+  },
+  {
+    "id": "kalma-authored-3",
+    "messages": [
+      {
+        "role": "user",
+        "content": "My family expects very high grades."
+      },
+      {
+        "role": "assistant",
+        "content": "That can be pressure. Have you been able to tell them how those expectations make you feel?"
+      },
+      {
+        "role": "user",
+        "content": "I haven't."
+      },
+      {
+        "role": "assistant",
+        "content": "Would it help to think through a calm way to explain it to them?"
+      },
+      {
+        "role": "user",
+        "content": "Yes."
+      },
+      {
+        "role": "assistant",
+        "content": "We can start with one sentence about how the pressure affects you, without blaming anyone."
+      }
+    ]
+  },
+  {
+    "id": "kalma-authored-4",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Can you just listen? I don't want advice."
+      },
+      {
+        "role": "assistant",
+        "content": "Of course. Tell me what happened; I won't jump into solutions."
+      },
+      {
+        "role": "user",
+        "content": "Today was exhausting."
+      },
+      {
+        "role": "assistant",
+        "content": "Sounds like a tiring day. What happened?"
+      },
+      {
+        "role": "user",
+        "content": "Everyone wanted something from me."
+      },
+      {
+        "role": "assistant",
+        "content": "That is a lot of demands at once. You can tell me more if you want."
+      }
+    ]
+  },
+  {
+    "id": "kalma-authored-5",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I can't decide which club to join."
+      },
+      {
+        "role": "assistant",
+        "content": "What are your options, and what do you enjoy most about them?"
+      },
+      {
+        "role": "user",
+        "content": "Art or programming."
+      },
+      {
+        "role": "assistant",
+        "content": "Both sound interesting. Would you rather explore creativity through art or build things with code right now?"
+      },
+      {
+        "role": "user",
+        "content": "I like both."
+      },
+      {
+        "role": "assistant",
+        "content": "Maybe compare the time commitment and what you'll learn in each, instead of choosing by what others expect."
+      }
+    ]
+  },
+  {
+    "id": "kalma-authored-6",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I'm feeling nervous about a presentation."
+      },
+      {
+        "role": "assistant",
+        "content": "Presentations can be nerve-racking. Is speaking in front of people or remembering the material the harder part?"
+      },
+      {
+        "role": "user",
+        "content": "Speaking in front of people."
+      },
+      {
+        "role": "assistant",
+        "content": "Practicing the opening out loud might help. Want to try a short opening together?"
+      },
+      {
+        "role": "user",
+        "content": "Yes."
+      },
+      {
+        "role": "assistant",
+        "content": "Great. What's the topic of your presentation?"
+      }
+    ]
+  },
+  {
+    "id": "kalma-authored-7",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I got good news today!"
+      },
+      {
+        "role": "assistant",
+        "content": "That's exciting! What happened?"
+      },
+      {
+        "role": "user",
+        "content": "I passed a difficult exam."
+      },
+      {
+        "role": "assistant",
+        "content": "Nice! What part of your preparation worked best for you?"
+      },
+      {
+        "role": "user",
+        "content": "Reviewing with friends."
+      },
+      {
+        "role": "assistant",
+        "content": "Sounds like studying together paid off. Enjoy that moment."
+      }
+    ]
+  },
+  {
+    "id": "kalma-authored-8",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Stress ako sa pag-aaral."
+      },
+      {
+        "role": "assistant",
+        "content": "Ang bigat kapag marami kang iniisip sa school. Requirements ba o expectations ng iba ang nagpapastress?"
+      },
+      {
+        "role": "user",
+        "content": "Mga requirements."
+      },
+      {
+        "role": "assistant",
+        "content": "Alin ang pinaka-urgent ngayon? Pwede nating isa-isahin."
+      },
+      {
+        "role": "user",
+        "content": "Science project."
+      },
+      {
+        "role": "assistant",
+        "content": "Ano ang kailangan sa science project at kailan ang deadline?"
+      }
+    ]
+  },
+  {
+    "id": "kalma-authored-9",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Gusto ko lang magkwento."
+      },
+      {
+        "role": "assistant",
+        "content": "Sige, nakikinig ako. Kumusta ang araw mo?"
+      },
+      {
+        "role": "user",
+        "content": "Nakakapagod."
+      },
+      {
+        "role": "assistant",
+        "content": "Mukhang mahaba ang araw mo. Anong nangyari?"
+      },
+      {
+        "role": "user",
+        "content": "Sabay-sabay ang projects."
+      },
+      {
+        "role": "assistant",
+        "content": "Ang dami niyan. Gusto mo bang magkwento muna o gumawa ng simple plan?"
+      }
+    ]
+  },
+  {
+    "id": "kalma-authored-10",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I'm not sure why I'm upset."
+      },
+      {
+        "role": "assistant",
+        "content": "That's okay; feelings aren't always easy to name. Was there a moment today that stood out?"
+      },
+      {
+        "role": "user",
+        "content": "I argued with a friend."
+      },
+      {
+        "role": "assistant",
+        "content": "That might have affected your day. What was the disagreement about?"
+      },
+      {
+        "role": "user",
+        "content": "We misunderstood each other."
+      },
+      {
+        "role": "assistant",
+        "content": "Misunderstandings happen. Would you rather talk through what was said or think about how to reconnect?"
+      }
+    ]
+  },
+  {
+    "id": "kalma-authored-11",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I keep comparing myself to other students."
+      },
+      {
+        "role": "assistant",
+        "content": "Comparisons can be discouraging. What do you usually compare—grades, achievements, or something else?"
+      },
+      {
+        "role": "user",
+        "content": "Achievements."
+      },
+      {
+        "role": "assistant",
+        "content": "It may help to look at your own progress. What is one skill you're proud of developing?"
+      },
+      {
+        "role": "user",
+        "content": "My coding."
+      },
+      {
+        "role": "assistant",
+        "content": "That sounds meaningful. What have you built recently?"
+      }
+    ]
+  },
+  {
+    "id": "kalma-authored-12",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I have a lot to do and don't know where to start."
+      },
+      {
+        "role": "assistant",
+        "content": "We can sort it out. What's the most urgent task?"
+      },
+      {
+        "role": "user",
+        "content": "An essay due tomorrow."
+      },
+      {
+        "role": "assistant",
+        "content": "Let's start with a small step: what's the essay topic?"
+      },
+      {
+        "role": "user",
+        "content": "Climate change."
+      },
+      {
+        "role": "assistant",
+        "content": "We could make a simple outline with an introduction, two points, and a conclusion."
+      }
+    ]
+  },
+  {
+    "id": "kalma-authored-13",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Do you understand psychology?"
+      },
+      {
+        "role": "assistant",
+        "content": "I can discuss general psychology concepts, but I'm not a licensed psychologist. What are you curious about?"
+      },
+      {
+        "role": "user",
+        "content": "Why do people overthink?"
+      },
+      {
+        "role": "assistant",
+        "content": "People can revisit uncertain situations when they want clarity. Is there a choice you've been thinking about a lot?"
+      },
+      {
+        "role": "user",
+        "content": "My future course."
+      },
+      {
+        "role": "assistant",
+        "content": "That's important. What options are you considering?"
+      }
+    ]
+  },
+  {
+    "id": "kalma-authored-14",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I feel overwhelmed by family expectations."
+      },
+      {
+        "role": "assistant",
+        "content": "That sounds difficult to carry. What do they hope you will do?"
+      },
+      {
+        "role": "user",
+        "content": "They want me to study medicine."
+      },
+      {
+        "role": "assistant",
+        "content": "That's a major path. How do you feel about studying medicine yourself?"
+      },
+      {
+        "role": "user",
+        "content": "I prefer technology."
+      },
+      {
+        "role": "assistant",
+        "content": "Your interests matter too. Would you like to organize what you want to say to them?"
+      }
+    ]
+  },
+  {
+    "id": "kalma-authored-15",
+    "messages": [
+      {
+        "role": "user",
+        "content": "How can I feel calmer before an exam?"
+      },
+      {
+        "role": "assistant",
+        "content": "You might take a short break, breathe comfortably, and review one key topic at a time. What part of the exam worries you most?"
+      },
+      {
+        "role": "user",
+        "content": "Time limits."
+      },
+      {
+        "role": "assistant",
+        "content": "Practicing a few timed questions could make the pace more familiar. Want to choose one topic to practice?"
+      },
+      {
+        "role": "user",
+        "content": "Math."
+      },
+      {
+        "role": "assistant",
+        "content": "Okay, which math topic are you reviewing?"
+      }
+    ]
+  },
+  {
+    "id": "kalma-authored-16",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I want to reflect on my choices."
+      },
+      {
+        "role": "assistant",
+        "content": "We can do that. Which choice has been on your mind?"
+      },
+      {
+        "role": "user",
+        "content": "I left a student organization."
+      },
+      {
+        "role": "assistant",
+        "content": "Sounds like a meaningful decision. What mattered most when you made it?"
+      },
+      {
+        "role": "user",
+        "content": "I needed more time."
+      },
+      {
+        "role": "assistant",
+        "content": "Protecting your time is a reasonable consideration. How has that choice affected your schedule?"
+      }
+    ]
+  }
+]
