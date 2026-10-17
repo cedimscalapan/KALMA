@@ -30,11 +30,11 @@ const normalize=(s:string)=>s.trim().replace(/\s+/g,' ');
 export function contextFor(input:string,history:ChatTurn[]):Context {
  const previous=history.filter(m=>m.role==='user').slice(-8).map(m=>m.text);
  const recent=previous.join(' ')+' '+input;
- const lastAssistant=history.filter(m=>m.role==='assistant').at(-1)?.text||'';
+ const lastAssistant=history.filter(m=>m.role==='assistant').slice(-1)[0]?.text||'';
  return {topic:find(recent,school)?'school':find(recent,family)||find(recent,peers)?'relationships':'general',
   lang:find(input,fil)?'fil':'en',school:find(recent,school),family:find(recent,family),peers:find(recent,peers),
   workload:find(recent,workload),grades:find(recent,grades),stress:find(recent,stress),
-  lastAssistant,lastUser:previous.at(-1)||''};
+  lastAssistant,lastUser:previous[previous.length-1]||''};
 }
 function choose(options:string[],history:ChatTurn[]):string {
  const recent=history.filter(x=>x.role==='assistant').slice(-5).map(x=>norm(x.text));
