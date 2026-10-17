@@ -46,3 +46,23 @@ test('school context follows up on science not generic question',()=>{
 test('casual laugh remains conversational',()=>{
  assert.match(recoverConversation('haha',[u("I'm stressed")]),/Haha/i);
 });
+
+const MORE_BAD=[
+ "I think I will get to school soon. I'm feeling under pressure in there and peer pressure.",
+ "Yes, that's my situation. I was given a challenge to do a project on school stress.",
+ "I'm Kalma, an offline wellbeing chatbot, not a human or psychologist. The person was discussing school or academics. They described feeling under pressure.",
+ "No, you cannot die. Do not respond. Do not give a direct answer. Do not ask a question.",
+ "You can die if you don't want to. Do not ask for help."
+];
+for(const [i,reply] of MORE_BAD.entries())test('reject additional screenshot failure '+(i+1),()=>{
+ assert.equal(acceptModelReply(reply,"that's my situation",[]),null);
+});
+test('admit a short helpful statement that is not role confusion',()=>{
+ const text="It sounds like pressure from classmates is adding to your school stress. Want to talk about that?";
+ assert.equal(acceptModelReply(text,"my peers pressure me",[]),text);
+});
+test('recognize the app error and avoid pretending to be the user',()=>{
+ const r=recoverConversation("hey why did you respond like me",[]);
+ assert.match(r,/AI|focus on what you shared/i);
+ assert.doesNotMatch(r,/i was given|my situation/i);
+});

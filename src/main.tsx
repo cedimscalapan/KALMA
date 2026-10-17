@@ -8,6 +8,7 @@ import './style.css';
 import {guidedResponse} from './conversation';
 import {buildReliableRequest,acceptModelReply,recoverConversation} from './chatReliability';
 import {routeMessage} from './router';
+import {safetyResponse} from './safety';
 setupIonicReact();
 type Tab='Today'|'Companion'|'Journal'|'Explore'|'Settings';
 type Message={role:'user'|'assistant';text:string;time:string;source?:'model'|'guided'|'fallback'|'safety'};
@@ -43,13 +44,16 @@ function App(){
  setMessage('');
  const next:Message={role:'user',text:value,time:new Date().toISOString()};
  setMessages(items=>[...items,next]);
- if(routeMessage(value)==='safety'){
+ // Safety routing happens before any model-loading or GGUF generation.
+ // For short answers after a safety response, preserve the safety pathway.
+ const route=routeMessage(value,messages);
+ if(route==='safety'){
    setMessages(items=>[...items,{role:'assistant',source:'safety',time:new Date().toISOString(),
-    text:'Thank you for sharing this. Please tell a trusted person who can stay with you, and contact local emergency services if you are in immediate danger. This app cannot provide emergency help.'}]);
+     text:safetyResponse(value,messages)}]);
    return;
  }
  // A guided wellness exercise is available offline even if the model is not connected.
- if(routeMessage(value)==='guided'){
+ if(route==='guided'){
    const guidance=guidedResponse(value,messages);
    if(guidance){setMessages(items=>[...items,{role:'assistant',text:guidance,time:new Date().toISOString(),source:'guided'}]);return;}
  }

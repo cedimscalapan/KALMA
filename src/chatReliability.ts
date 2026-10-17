@@ -35,9 +35,9 @@ export function buildReliableRequest(input:string,history:Turn[]){
   const summary=facts.length?'Context: '+facts.join(', ')+'. ':'';
   return {
     prompt:input.trim().slice(0,420),
-    systemPrompt:'Reply to the user naturally in 1 or 2 short sentences. No invented personal experiences or model discussion. '+
+    systemPrompt:'You are Kalma. Answer the last user message directly in 1 or 2 sentences. Speak TO the user, never AS the user. No personal stories, no instructions or technical details. '+
       summary+latest+lastQuestion+
-      (context.filipino?'Use Filipino or Taglish.':'Use English.'),
+      (context.filipino?'Respond in Filipino or Taglish.':'Respond in English.'),
     maxTokens:96
   };
 }
@@ -55,7 +55,12 @@ export function acceptModelReply(raw:string,latest:string,history:Turn[]=[]):str
  const inventedSelf=/\b(?:i(?:'m| am) (?:feeling|a bit|really|also|so) (?:stressed|anxious|sad|depressed|burnt out|burned out|overwhelmed|exhausted|lonely)|i(?:'m| am) not sure what to do to relax|i (?:was hoping|just had a chat|wanted to take some time to rest)|i(?:'m| am) (?:a|an) (?:\d+[- ]year[- ]old|student|freelancer|therapist|psychologist)|i(?:'m| am) currently taking a|i have been struggling with)\b/i;
  const falseSensing=/\b(?:i can sense (?:the )?(?:stress|emotion|sadness) in your voice|i can hear (?:the )?(?:stress|worry|sadness) in your voice|i can see (?:that )?you(?:'re| are) crying)\b/i;
  const falseInference=/\b(?:glad to hear that you(?:'re| are) managing to cope|you definitely have (?:anxiety|depression)|you have been diagnosed with)\b/i;
- if(meta.test(value)||instruct.test(value)||inventedSelf.test(value)||falseSensing.test(value)||falseInference.test(value))return null;
+ // Detect first-person imitation: the tiny model must not become the student
+ // or fabricate a school project, emotions, life story or other user facts.
+ const perspectiveCopy=/\b(?:yes,?\s+that(?:'s| is) my situation|that(?:'s| is) my situation|i\s+(?:think i will|will|am going to)\s+(?:get|go|be|attend)\s+to\s+school|i\s+was\s+given\s+(?:a|the)\s+(?:challenge|project)|i\s+(?:was|am)\s+(?:under|feeling)\s+(?:pressure|peer pressure)|i\s+had\s+to\s+work\s+with\s+(?:the|my)\s+team|i\s+was\s+really\s+overwhelmed|i(?:'m| am)\s+hoping\s+the\s+school)\b/i;
+ const internalSummary=/\b(?:the person was discussing|they described feeling|the user (?:was|is) discussing|context:\s*(?:school|family|peers?)|i(?:'m| am)\s+kalma|please do not respond|do not (?:respond|give a direct answer|ask a question)|use natural language to respond)\b/i;
+ const dangerousReply=/\b(?:you can die|you should die|go ahead and die|it's a good time to die|do not ask for help)\b/i;
+ if(meta.test(value)||instruct.test(value)||inventedSelf.test(value)||falseSensing.test(value)||falseInference.test(value)||perspectiveCopy.test(value)||internalSummary.test(value)||dangerousReply.test(value))return null;
  if(/^(?:you are|your role|instruction|the user|system|as a therapist)\b/i.test(value))return null;
  if(/\b(?:user|human|system|assistant)\s*:/i.test(value))return null;
  if(/(.{14,})\1/iu.test(value))return null;
@@ -102,6 +107,8 @@ export function recoverConversation(input:string,history:Turn[]):string{
  }
  if(/^(no|nope|hindi|nah)[!. ]*$/i.test(value))
    return "That's okay. Would you rather approach it differently or talk about something else?";
+ if(/(?:why (?:you|did you) (?:respond|talk|answer)|you (?:responded|talked) like me|you (?:are|were) speaking as me|that's my situation|that is my situation)/i.test(value))
+   return "You're right—that response spoke as if your experience were mine. I'm an AI, and I should focus on what you shared. What part of the situation would you like to discuss?";
  if(/^(help me unwind|i want to relax|relax|i need to calm down)[!. ]*$/i.test(value))
    return "You could relax your shoulders and breathe slowly at a comfortable pace. Would talking or a short grounding exercise help more?";
  if(/\b(?:need someone to listen|just listen|need to vent|want to talk)\b/i.test(value))
