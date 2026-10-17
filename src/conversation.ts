@@ -4,7 +4,7 @@
  * High-confidence wellness requests use short, reviewed-style guided support;
  * other requests can use the local GGUF model with a compact context summary.
  */
-export type ChatTurn={role:'user'|'assistant';text:string;source?:'guided'|'model'};
+export type ChatTurn={role:'user'|'assistant';text:string;source?:'guided'|'model'|'fallback'|'safety'};
 type Topic='school'|'relationships'|'general';
 type Language='en'|'fil';
 type Context={topic:Topic;lang:Language;school:boolean;family:boolean;peers:boolean;workload:boolean;grades:boolean;stress:boolean;lastAssistant:string;lastUser:string};
