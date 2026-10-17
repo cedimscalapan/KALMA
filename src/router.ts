@@ -1,5 +1,5 @@
 /** Explicit offline safety and guided routes; normal conversations reach the local model. */
-import {isHighRiskMessage,isSafetyFollowUp} from './safety';
+import {isHighRiskMessage,isSafetyFollowUp} from './safety.ts';
 export type ResponseRoute='model'|'guided'|'safety';
 type PriorTurn={role:string;text:string;source?:string};
 export function routeMessage(input:string,history:PriorTurn[]=[]):ResponseRoute{
